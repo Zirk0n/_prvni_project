@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
+</head>
+<body>
+    <main class="container">
+        {% include 'ukoly/menu.html' %}
+        <h1>Toto je úkol číslo: {{ index_ukolu }} pro {{ ukol.autor.username }}</h1>
+        <h2>
+            {{ ukol.nazev }}
+        </h2>
+
+        <p>
+            Stav: {{ ukol.stav }}
+        </p>
+        <form method="post" action="">
+            {% csrf_token %}
+            <label>Název
+                <input type="text" value="{{ ukol.nazev }}" name="nazev">
+            </label>
+            <label>Autor
+                <input type="text" value="{{ ukol.jmeno_autora }}" name="autor">
+            </label>
+            <label>
+                <input type="checkbox" {% if ukol.stav %}checked{% endif %} name="stav">
+                Stav
+            </label>
+            <br>
+            <button type="submit" role="button" style="width:200px">Odeslat</button>
+        </form>
+
+    </main>
+</body>
+</html>

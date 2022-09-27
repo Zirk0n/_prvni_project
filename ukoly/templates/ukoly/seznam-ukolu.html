@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
+</head>
+<body>
+    <main class="container">
+        {% include 'ukoly/menu.html' %}
+        <h1>Toto je seznam úkolů {% if jmeno %} {{ jmeno }} {% endif %}(2)</h1>
+
+        <form method="post" action="">
+            {% csrf_token %}
+
+            {% for item in ukoly %}
+                <label>
+                    <input type="checkbox" {% if item.stav == True %}checked{% endif %} name="ukol_id_{{ item.id }}">
+                        <a href="{{ item.get_absolute_url}}">{{ item.id }} {{ item.nazev }} ({{ item.autor.username }})</a>
+                </label>
+            {% empty %}
+                <p>Nebyly nalezeny žádné úkoly</p>
+            {% endfor %}
+            <br>
+            <button type="submit" role="button" style="width: 200px">Uložit změny</button>
+
+
+        </form>
+
+    </main>
+</body>
+</html>
